@@ -1,0 +1,18 @@
+{
+  "main.css": "/portfolio/static/css/main.0af5c45f.chunk.css",
+  "main.js": "/portfolio/static/js/main.37156094.chunk.js",
+  "main.js.map": "/portfolio/static/js/main.37156094.chunk.js.map",
+  "runtime~main.js": "/portfolio/static/js/runtime~main.b8bab779.js",
+  "runtime~main.js.map": "/portfolio/static/js/runtime~main.b8bab779.js.map",
+  "vendors~main.js": "/portfolio/static/js/vendors~main.0b49ec49.chunk.js",
+  "vendors~main.js.map": "/portfolio/static/js/vendors~main.0b49ec49.chunk.js.map",
+  "./service-worker.js": "/portfolio/./service-worker.js",
+  "double-bubble-outline.png": "/portfolio/double-bubble-outline.png",
+  "favicon.ico": "/portfolio/favicon.ico",
+  "first_logo.png": "/portfolio/first_logo.png",
+  "index.html": "/portfolio/index.html",
+  "logo.svg": "/portfolio/logo.svg",
+  "manifest.json": "/portfolio/manifest.json",
+  "precache-manifest.4aed1435080eaf4eb680bb1238953bbb.js": "/portfolio/precache-manifest.4aed1435080eaf4eb680bb1238953bbb.js",
+  "rotating_clock.gif": "/portfolio/rotating_clock.gif"
+}
