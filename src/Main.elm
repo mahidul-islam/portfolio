@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Browser
-import Colors
+import Colors exposing (blue, white)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -53,12 +53,12 @@ update msg model =
 view : Model -> Html Msg
 view model =
     layout [ Background.tiled "double-bubble-outline.png" ] <|
-        column [ width <| px 960, centerX ] [ navBar, body model, footer ]
+        column [ width <| px 960, centerX, spacing 50 ] [ navBar, body model, footer ]
 
 
 navBar : Element Msg
 navBar =
-    row [ width fill ]
+    row [ width fill, paddingEach { bottom = 0, left = 0, right = 0, top = 20 } ]
         [ rightNav
         , leftNav
         ]
@@ -79,21 +79,22 @@ leftNav =
 
 body : Model -> Element Msg
 body model =
-    column [] [ heroPart, bigText, experience, contactMe model ]
+    column [ spacing 50 ] [ heroPart, bigText, experience, contactMe model ]
 
 
 heroPart : Element Msg
 heroPart =
-    row []
+    row [ width fill, spaceEvenly ]
         [ column
-            [ width fill
-            , centerY
-            , spacing 10
+            [ height fill, spacing 50 ]
+            [ text "Only Measuring Scale", text "Honesty and Truth" ]
+        , column
+            [ centerY
             , Border.widthEach { right = 1, left = 0, top = 0, bottom = 0 }
             , Border.color <| rgb255 0xE0 0xE0 0xE0
             , height <| px 200
             ]
-            [ text "Only Measuring Scale", text "Honesty and Truth" ]
+            []
         , column []
             [ image []
                 { src = "rotating_clock.gif"
@@ -106,7 +107,7 @@ heroPart =
 bigText : Element Msg
 bigText =
     row []
-        [ column []
+        [ column [ spacing 30 ]
             [ text "Hi, I am a Flutter dev, and a UX designer from Bangladesh."
             , text "With a strong passion for Knowledge and a very curious mind."
             ]
@@ -116,10 +117,10 @@ bigText =
 experience : Element Msg
 experience =
     row []
-        [ column []
+        [ column [ spacing 30 ]
             [ text "My experience"
             , text "I have some experience in developing and prototyping beautiful app with a pinch of Backend Development"
-            , row []
+            , row [ spacing 30 ]
                 [ singleExperience "N-techBD" "Back End Developer" "July 2020 — August 2020"
                 , singleExperience "Pillar" "Flutter Developer" "September 2020 — forever"
                 ]
@@ -129,7 +130,7 @@ experience =
 
 singleExperience : String -> String -> String -> Element Msg
 singleExperience companyName role timeline =
-    column []
+    column [ spacing 20 ]
         [ text companyName
         , text role
         , text timeline
@@ -143,38 +144,103 @@ contactMe model =
         , width fill
         , height <| px 400
         ]
-        [ column []
+        [ column [ spacing 20 ]
             [ text "Want to get in touch?"
             , text "Drop me a line!"
             , text "I will be very happy to talk about any opportunity & possiblity"
             , row []
-                [ form model
-                , form model
+                [ nameForm model
+                , emailForm model
                 ]
-            , form model
+            , messageForm model
+            , sendButton model
             ]
         ]
 
 
-form : Model -> Element Msg
-form model =
+nameForm : Model -> Element Msg
+nameForm model =
+    Input.text
+        [ height shrink
+        , spacing 12
+        ]
+        { text = model.name
+        , placeholder = Just (Input.placeholder [] (text "Name"))
+        , onChange = \new -> Update { model | name = new }
+        , label = Input.labelAbove [ Font.size 14 ] (text "Name")
+        }
+
+
+emailForm : Model -> Element Msg
+emailForm model =
+    Input.text
+        [ height shrink
+        , spacing 12
+        ]
+        { text = model.email
+        , placeholder = Just (Input.placeholder [] (text "E-mail"))
+        , onChange = \new -> Update { model | email = new }
+        , label = Input.labelAbove [ Font.size 14 ] (text "Email")
+        }
+
+
+messageForm : Model -> Element Msg
+messageForm model =
     Input.multiline
         [ height shrink
         , spacing 12
-
-        -- , padding 6
         ]
-        { text = "Hello"
-        , placeholder = Just (Input.placeholder [] (text "Extra hot sauce?\n\n\nYes pls"))
+        { text = model.message
+        , placeholder = Just (Input.placeholder [] (text "message"))
         , onChange = \new -> Update { model | message = new }
-        , label = Input.labelAbove [ Font.size 14 ] (text "Leave a comment!")
+        , label = Input.labelAbove [ Font.size 14 ] (text "Leave a message")
         , spellcheck = False
         }
 
 
-footer : Element msg
+sendButton : Model -> Element Msg
+sendButton model =
+    Input.button
+        [ Background.color blue
+        , Font.color white
+        , paddingXY 32 16
+        , Border.rounded 3
+        , width fill
+        ]
+        { onPress = Nothing
+        , label = Element.text "Send !!!"
+        }
+
+
+footer : Element Msg
 footer =
-    row [] [ text "footer" ]
+    row [ width fill, paddingEach { bottom = 50, left = 0, right = 0, top = 0 } ]
+        [ rightFooter
+        , leftFooter
+        ]
+
+
+rightFooter : Element Msg
+rightFooter =
+    text "Get Me Everywhere"
+
+
+leftFooter : Element Msg
+leftFooter =
+    row [ alignRight, spacing 20 ]
+        [ link []
+            { url = "http://github.com/mahidul-islam"
+            , label = text "GitHub"
+            }
+        , link []
+            { url = "https://www.linkedin.com/in/mahidul-islam-11309915a/"
+            , label = text "LinkedIn"
+            }
+        , link []
+            { url = "https://www.facebook.com/mizihan84/"
+            , label = text "FaceBook"
+            }
+        ]
 
 
 
