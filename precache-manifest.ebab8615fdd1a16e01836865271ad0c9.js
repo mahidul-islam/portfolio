@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portfolio/first_logo.png"
   },
   {
-    "revision": "b4b0134cac9d90e12847cd1d586537ba",
+    "revision": "78f0a058b989cb52dcfffa2c3883434c",
     "url": "/portfolio/index.html"
   },
   {
@@ -28,12 +28,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portfolio/rotating_clock.gif"
   },
   {
-    "revision": "14c0c3e444498ed1c250",
+    "revision": "f1e451463e421f4bb838",
     "url": "/portfolio/static/css/main.0af5c45f.chunk.css"
   },
   {
-    "revision": "14c0c3e444498ed1c250",
-    "url": "/portfolio/static/js/main.14c0c3e4.chunk.js"
+    "revision": "f1e451463e421f4bb838",
+    "url": "/portfolio/static/js/main.f1e45146.chunk.js"
   },
   {
     "revision": "b8bab779f3111de3cde7",
