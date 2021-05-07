@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Browser
-import Colors exposing (blue, white)
+import Colors exposing (apple, blue, charcoalGrey, dark, neonRed, paleGrey, white)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -52,13 +52,28 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    layout [ Background.tiled "double-bubble-outline.png" ] <|
+    layout
+        [ Background.tiled "double-bubble-outline.png"
+        , Font.family
+            [ Font.external
+                { name = "Montserrat"
+                , url = "https://fonts.googleapis.com/css?family=Montserrat"
+                }
+            , Font.sansSerif
+            ]
+        ]
+    <|
         column [ width <| px 960, centerX, spacing 50 ] [ navBar, body model, footer ]
 
 
 navBar : Element Msg
 navBar =
-    row [ width fill, paddingEach { bottom = 0, left = 0, right = 0, top = 20 } ]
+    row
+        [ width fill
+        , paddingEach { bottom = 0, left = 0, right = 0, top = 20 }
+
+        -- , Background.color apple
+        ]
         [ rightNav
         , leftNav
         ]
@@ -66,7 +81,7 @@ navBar =
 
 rightNav : Element Msg
 rightNav =
-    image []
+    image [ scale 0.5 ]
         { src = "first_logo.png"
         , description = "Logo"
         }
@@ -74,20 +89,32 @@ rightNav =
 
 leftNav : Element Msg
 leftNav =
-    row [ alignRight ] [ text "Home", text "About" ]
+    row [ alignRight, spacing 20 ] [ text "Home", text "About" ]
 
 
 body : Model -> Element Msg
 body model =
-    column [ spacing 50 ] [ heroPart, bigText, experience, contactMe model ]
+    column [ spacing 50, width fill ] [ heroPart, bigText, experience, contactMe model ]
 
 
 heroPart : Element Msg
 heroPart =
-    row [ width fill, spaceEvenly ]
+    row [ width fill, spaceEvenly, padding 50 ]
         [ column
             [ height fill, spacing 50 ]
-            [ text "Only Measuring Scale", text "Honesty and Truth" ]
+            [ paragraph
+                [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+                , Font.size 20
+                , Font.bold
+                ]
+                [ text "Only Measuring Scale" ]
+            , paragraph
+                [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+                , Font.size 44
+                , Font.bold
+                ]
+                [ text "Honesty and Truth" ]
+            ]
         , column
             [ centerY
             , Border.widthEach { right = 1, left = 0, top = 0, bottom = 0 }
@@ -95,8 +122,13 @@ heroPart =
             , height <| px 200
             ]
             []
-        , column []
-            [ image []
+        , column
+            [-- Background.color neonRed
+            ]
+            [ image
+                [ scale 2
+                , padding 30
+                ]
                 { src = "rotating_clock.gif"
                 , description = "An image"
                 }
@@ -106,20 +138,51 @@ heroPart =
 
 bigText : Element Msg
 bigText =
-    row []
-        [ column [ spacing 30 ]
-            [ text "Hi, I am a Flutter dev, and a UX designer from Bangladesh."
-            , text "With a strong passion for Knowledge and a very curious mind."
+    column
+        [ width fill
+
+        -- , Background.color apple
+        ]
+        [ paragraph
+            [ paddingEach { bottom = 30, left = 0, right = 0, top = 0 }
+            , width <| px 600
+            , Font.size 36
+            , centerX
             ]
+            [ text "Hi, I am a Flutter dev, and a UX designer from Bangladesh." ]
+        , paragraph
+            [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+            , width <| px 600
+            , Font.size 24
+            , centerX
+            ]
+            [ text "With a strong passion for Knowledge and a very curious mind." ]
         ]
 
 
 experience : Element Msg
 experience =
-    row []
-        [ column [ spacing 30 ]
-            [ text "My experience"
-            , text "I have some experience in developing and prototyping beautiful app with a pinch of Backend Development"
+    row
+        [ width fill
+        , paddingEach { bottom = 0, left = 0, right = 0, top = 100 }
+        ]
+        [ column [ spacing 30, width fill ]
+            [ paragraph
+                [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+                , Font.size 36
+                , Font.alignLeft
+                ]
+                [ text "My experience" ]
+            , paragraph
+                [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+                , width <| px 700
+                , Font.size 16
+
+                -- , Background.color apple
+                , Font.alignLeft
+                , Font.color charcoalGrey
+                ]
+                [ text "I have some experience in developing and prototyping beautiful app with a pinch of Backend Development" ]
             , row [ spacing 30 ]
                 [ singleExperience "N-techBD" "Back End Developer" "July 2020 — August 2020"
                 , singleExperience "Pillar" "Flutter Developer" "September 2020 — forever"
@@ -130,30 +193,68 @@ experience =
 
 singleExperience : String -> String -> String -> Element Msg
 singleExperience companyName role timeline =
-    column [ spacing 20 ]
-        [ text companyName
-        , text role
-        , text timeline
+    column [ spacing 20, width <| px 200 ]
+        [ paragraph
+            [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+            , Font.size 20
+            , Font.alignLeft
+            ]
+            [ text companyName ]
+        , paragraph
+            [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+            , Font.size 16
+            , Font.alignLeft
+            , Font.color charcoalGrey
+            ]
+            [ text role ]
+        , paragraph
+            [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+            , Font.size 12
+            , Font.alignLeft
+            , Font.color charcoalGrey
+            ]
+            [ text timeline ]
         ]
 
 
 contactMe : Model -> Element Msg
 contactMe model =
     row
-        [ Background.color Colors.paleGrey
-        , width fill
-        , height <| px 400
+        [ width fill
+        , height <| px 600
+        , paddingEach { bottom = 0, left = 0, right = 0, top = 60 }
         ]
-        [ column [ spacing 20 ]
-            [ text "Want to get in touch?"
-            , text "Drop me a line!"
-            , text "I will be very happy to talk about any opportunity & possiblity"
-            , row []
+        [ column
+            [ spacing 20
+            , width fill
+            , Background.color Colors.paleGrey
+            ]
+            [ paragraph
+                [ paddingEach { bottom = 0, left = 0, right = 0, top = 50 }
+                , Font.size 30
+                , Font.alignLeft
+                ]
+                [ text "Want to get in touch?" ]
+            , paragraph
+                [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+                , Font.size 30
+                , Font.alignLeft
+                ]
+                [ text "Drop me a line!" ]
+            , paragraph
+                [ paddingEach { bottom = 0, left = 0, right = 0, top = 0 }
+                , Font.size 16
+                , Font.alignLeft
+                , Font.color charcoalGrey
+                ]
+                [ text "I will be very happy to talk about any opportunity & possiblity" ]
+            , row [ spacing 20 ]
                 [ nameForm model
                 , emailForm model
                 ]
             , messageForm model
             , sendButton model
+            , el [ padding 25 ] (text "")
             ]
         ]
 
@@ -163,11 +264,12 @@ nameForm model =
     Input.text
         [ height shrink
         , spacing 12
+        , width <| px 340
         ]
         { text = model.name
         , placeholder = Just (Input.placeholder [] (text "Name"))
         , onChange = \new -> Update { model | name = new }
-        , label = Input.labelAbove [ Font.size 14 ] (text "Name")
+        , label = Input.labelAbove [ Font.size 14, alignLeft ] (text "Name")
         }
 
 
@@ -176,11 +278,12 @@ emailForm model =
     Input.text
         [ height shrink
         , spacing 12
+        , width <| px 340
         ]
         { text = model.email
         , placeholder = Just (Input.placeholder [] (text "E-mail"))
         , onChange = \new -> Update { model | email = new }
-        , label = Input.labelAbove [ Font.size 14 ] (text "Email")
+        , label = Input.labelAbove [ Font.size 14, alignLeft ] (text "Email")
         }
 
 
@@ -189,11 +292,12 @@ messageForm model =
     Input.multiline
         [ height shrink
         , spacing 12
+        , width <| px 700
         ]
         { text = model.message
         , placeholder = Just (Input.placeholder [] (text "message"))
         , onChange = \new -> Update { model | message = new }
-        , label = Input.labelAbove [ Font.size 14 ] (text "Leave a message")
+        , label = Input.labelAbove [ Font.size 14, alignLeft ] (text "Leave a message")
         , spellcheck = False
         }
 
@@ -201,11 +305,11 @@ messageForm model =
 sendButton : Model -> Element Msg
 sendButton model =
     Input.button
-        [ Background.color blue
+        [ Background.color dark
         , Font.color white
         , paddingXY 32 16
         , Border.rounded 3
-        , width fill
+        , width <| px 200
         ]
         { onPress = Nothing
         , label = Element.text "Send !!!"
