@@ -1,10 +1,11 @@
 module Main exposing (..)
 
-import Browser exposing (element)
+import Browser
 import Colors
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
+import Element.Font as Font
 import Element.Input as Input
 import Html exposing (Html)
 
@@ -14,20 +15,30 @@ import Html exposing (Html)
 
 
 type alias Model =
-    {}
+    { name : String
+    , email : String
+    , message : String
+    }
+
+
+type Msg
+    = Update Model
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( { name = ""
+      , email = ""
+      , message = ""
+      }
+    , Cmd.none
+    )
 
 
 
 -- UPDATE ----
-
-
-type Msg
-    = NoOp
+-- type Msg
+--     = NoOp
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -42,10 +53,10 @@ update msg model =
 view : Model -> Html Msg
 view model =
     layout [ Background.tiled "double-bubble-outline.png" ] <|
-        column [ width <| px 960, centerX ] [ navBar, body, footer ]
+        column [ width <| px 960, centerX ] [ navBar, body model, footer ]
 
 
-navBar : Element msg
+navBar : Element Msg
 navBar =
     row [ width fill ]
         [ rightNav
@@ -53,7 +64,7 @@ navBar =
         ]
 
 
-rightNav : Element msg
+rightNav : Element Msg
 rightNav =
     image []
         { src = "first_logo.png"
@@ -61,17 +72,17 @@ rightNav =
         }
 
 
-leftNav : Element msg
+leftNav : Element Msg
 leftNav =
     row [ alignRight ] [ text "Home", text "About" ]
 
 
-body : Element msg
-body =
-    column [] [ heroPart, bigText, experience, contactMe ]
+body : Model -> Element Msg
+body model =
+    column [] [ heroPart, bigText, experience, contactMe model ]
 
 
-heroPart : Element msg
+heroPart : Element Msg
 heroPart =
     row []
         [ column
@@ -92,7 +103,7 @@ heroPart =
         ]
 
 
-bigText : Element msg
+bigText : Element Msg
 bigText =
     row []
         [ column []
@@ -102,7 +113,7 @@ bigText =
         ]
 
 
-experience : Element msg
+experience : Element Msg
 experience =
     row []
         [ column []
@@ -116,7 +127,7 @@ experience =
         ]
 
 
-singleExperience : String -> String -> String -> Element msg
+singleExperience : String -> String -> String -> Element Msg
 singleExperience companyName role timeline =
     column []
         [ text companyName
@@ -125,43 +136,40 @@ singleExperience companyName role timeline =
         ]
 
 
-contactMe : Element msg
-contactMe =
+contactMe : Model -> Element Msg
+contactMe model =
     row
         [ Background.color Colors.paleGrey
         , width fill
-        , height <| px 200
+        , height <| px 400
         ]
         [ column []
             [ text "Want to get in touch?"
             , text "Drop me a line!"
             , text "I will be very happy to talk about any opportunity & possiblity"
             , row []
-                [--     form "NAME"
-                 -- , form "EMAIL ADDRESS"
+                [ form model
+                , form model
                 ]
+            , form model
             ]
         ]
 
 
+form : Model -> Element Msg
+form model =
+    Input.multiline
+        [ height shrink
+        , spacing 12
 
--- form : String -> Element msg
--- form title =
---     Input.multiline
---         [ width <| maximum 450 fill
---         , height <| px 150
---         , Border.rounded 6
---         , Border.width 2
---         , Border.color <| rgb255 0x72 0x9F 0xCF
---         ]
---         { onChange = msg
---         , text = ""
---         , placeholder = Just <| Input.placeholder [] <| text "Type your message"
---         , label = Input.labelAbove [] <| text "Message"
---         , spellcheck = True
---         }
--- change input =
---     msg
+        -- , padding 6
+        ]
+        { text = "Hello"
+        , placeholder = Just (Input.placeholder [] (text "Extra hot sauce?\n\n\nYes pls"))
+        , onChange = \new -> Update { model | message = new }
+        , label = Input.labelAbove [ Font.size 14 ] (text "Leave a comment!")
+        , spellcheck = False
+        }
 
 
 footer : Element msg
